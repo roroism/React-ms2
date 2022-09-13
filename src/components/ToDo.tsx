@@ -42,6 +42,16 @@ function ToDo({ text, category, id }: IToDo) {
     });
   };
 
+  const handleonClicktoDelete = () => {
+    setToDos((oldToDos) => {
+      const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
+      const newToDos = [...oldToDos];
+      newToDos.splice(targetIndex, 1);
+
+      return newToDos;
+    });
+  };
+
   return (
     <li>
       <span>{text}</span>
@@ -60,6 +70,7 @@ function ToDo({ text, category, id }: IToDo) {
           Done
         </button>
       )}
+      <button onClick={handleonClicktoDelete}>Delete</button>
     </li>
   );
 }
