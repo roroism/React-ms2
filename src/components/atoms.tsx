@@ -1,4 +1,5 @@
 import { atom, selector } from "recoil";
+import { recoilPersist } from "recoil-persist";
 
 // type categories = "TO_DO" | "DOING" | "DONE";
 
@@ -14,6 +15,8 @@ export interface IToDo {
   category: Categories;
 }
 
+const { persistAtom } = recoilPersist();
+
 export const categoryState = atom<Categories>({
   key: "category",
   default: Categories.TO_DO,
@@ -22,6 +25,7 @@ export const categoryState = atom<Categories>({
 export const toDoState = atom<IToDo[]>({
   key: "toDo",
   default: [],
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const toDoSelector = selector({
