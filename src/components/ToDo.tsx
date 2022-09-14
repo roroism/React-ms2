@@ -1,6 +1,6 @@
 import React from "react";
-import { useSetRecoilState } from "recoil";
-import { Categories, IToDo, toDoState } from "./atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { IToDo, toDoState, Categories, allCategoryListState } from "./atoms";
 
 // function ToDo({ text, category }: IToDo) {
 //   const onClick = (newCategory: IToDo["category"]) => {
@@ -25,6 +25,10 @@ import { Categories, IToDo, toDoState } from "./atoms";
 
 function ToDo({ text, category, id }: IToDo) {
   const setToDos = useSetRecoilState(toDoState);
+  const categoryList = useRecoilValue(allCategoryListState);
+
+  console.log("categoryList", categoryList);
+
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
       currentTarget: { name },
@@ -55,7 +59,7 @@ function ToDo({ text, category, id }: IToDo) {
   return (
     <li>
       <span>{text}</span>
-      {category !== Categories.DOING && (
+      {/* {category !== Categories.DOING && (
         <button name={Categories.DOING} onClick={onClick}>
           Doing
         </button>
@@ -69,6 +73,15 @@ function ToDo({ text, category, id }: IToDo) {
         <button name={Categories.DONE} onClick={onClick}>
           Done
         </button>
+      )} */}
+
+      {categoryList.map(
+        (item, idx) =>
+          item !== category && (
+            <button key={idx} name={item} onClick={onClick}>
+              {item}
+            </button>
+          )
       )}
       <button onClick={handleonClicktoDelete}>Delete</button>
     </li>
